@@ -22,4 +22,13 @@ class Checkin(BaseModel):
 
     id: int
     timestamp: datetime
+    # user_pid: int
     # user: User
+
+class UserDetails(User):
+    """"Adding checkins to the User class."""
+    checkins: list[Checkin]
+
+class CheckinDetails(Checkin):
+    """"Add user to the Checkin class."""
+    user: User

@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Self, Type
 
-from .models import User, Checkin
+from .models import User, Checkin, UserDetails, CheckinDetails
 
 # TODO: Uncomment once UserDetails and CheckinDetails are implemented.
 # from .models import UserDetails, CheckinDetails
@@ -40,14 +40,14 @@ class UserEntity(Base):
         return User(pid=self.pid, first_name=self.first_name, last_name=self.last_name)
 
     # TODO: Uncomment once UserDetails is implemented
-    # def to_model_details(self) -> UserDetails:
-    #     checkins = map(lambda checkin_entity: checkin_entity.to_model(), self.checkins)
-    #     return UserDetails(
-    #         pid=self.pid,
-    #         first_name=self.first_name,
-    #         last_name=self.last_name,
-    #         checkins=checkins,
-    #     )
+    def to_model_details(self) -> UserDetails:
+        checkins = map(lambda checkin_entity: checkin_entity.to_model(), self.checkins)
+        return UserDetails(
+            pid=self.pid,
+            first_name=self.first_name,
+            last_name=self.last_name,
+            checkins=checkins, # type: ignore
+        )
 
 
 class CheckinEntity(Base):
@@ -68,7 +68,7 @@ class CheckinEntity(Base):
         return Checkin(id=self.id, user=self.user.to_model(), timestamp=self.timestamp) # type: ignore
 
     # TODO: Uncomment after implementing CheckinDetails
-    # def to_model_details(self) -> CheckinDetails:
-    #     return CheckinDetails(
-    #         id=self.id, timestamp=self.timestamp, user=self.user.to_model()
-    #     )
+    def to_model_details(self) -> CheckinDetails:
+        return CheckinDetails(
+            id=self.id, timestamp=self.timestamp, user=self.user.to_model()
+        )

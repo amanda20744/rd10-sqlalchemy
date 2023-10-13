@@ -43,7 +43,7 @@ def populate_demo_data(
 
     # TODO #2: Use the `checkin_service` parameter to make 30 demo Checkins.
     # Each checkin should made at random for one of the three User models above.
-    for i in range(30):
+    for _ in range(30):
         index = randint(0, 2)
         checkin_service.checkin(users[index])
 
